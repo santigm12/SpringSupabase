@@ -24,6 +24,18 @@ Juntos formamos un equipo imparable, listo para llevar SpringSupabase al siguien
 
 ---
 
+## 🚀 Cómo ejecutar el proyecto
+
+### 🏗️ Clonar el repositorio en IntelliJ IDEA  
+1️⃣ Abre **IntelliJ IDEA**  
+2️⃣ Selecciona **Get from VCS** (Obtener desde control de versiones)  
+3️⃣ Introduce la URL del repositorio:  
+   ```bash
+   git clone https://github.com/santigm12/SpringSupabase.git
+ ```
+
+---
+
 ## 🎯 Objetivos del Proyecto
 
 ✔️ Integrar **Spring Boot** con **Supabase** de manera eficiente
@@ -35,12 +47,6 @@ Juntos formamos un equipo imparable, listo para llevar SpringSupabase al siguien
 ## 📌 Contribuciones
 
 ¡Nos encantaría que te unas a este proyecto! Si tienes ideas, mejoras o encuentras algún bug, no dudes en abrir un **issue** o enviar un **pull request**. 💡✨
-
----
-
-## 📜 Licencia
-
-Este proyecto está bajo la licencia **MIT**, por lo que puedes usarlo libremente. 😊
 
 ---
 
