@@ -51,9 +51,6 @@ public class TareaControlador {
         if (tarea.getFecha() == null) {
             return ResponseEntity.badRequest().body("La fecha de la tarea es obligatoria.");
         }
-        if(!tarea.getHecho() || tarea.getHecho()){
-            return ResponseEntity.badRequest().body("No es tipo boolean lo introducido.");
-        }
 
         return ResponseEntity.status(201).body(tarea.toString());
     }
@@ -72,9 +69,6 @@ public class TareaControlador {
         }
         if (tarea.getFecha() == null) {
             return ResponseEntity.badRequest().body("La fecha de la tarea es obligatoria.");
-        }
-        if(!tarea.getHecho() || tarea.getHecho()){
-            return ResponseEntity.badRequest().body("No es tipo boolean lo introducido.");
         }
 
         Optional<Tarea> tareaActualizada = tareaServicio.actualizarTarea(id, tarea);
