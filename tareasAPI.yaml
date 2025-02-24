@@ -1,0 +1,185 @@
+openapi: "3.0.0"
+info:
+  title: "API de Tareas"
+  version: "1.0.0"
+  description: >
+    "API para gestionar tareas. Este documento considera las validaciones de entrada y los posibles mensajes de error definidos en el controlador."
+  x-logo:
+    url: "https://thumbs.dreamstime.com/b/la-lista-de-control-hacer-trabaja-tarea-l%C3%ADnea-puntos-azul-icono-libreta-148932328.jpg"
+    altText: "Logo de la API de Tareas"
+    backgroundColor: "#FFFFFF"
+servers:
+  - url: "http://localhost:8080"
+paths:
+  /tareas:
+    get:
+      summary: "Obtener todas las tareas"
+      description: >
+        "Retorna la lista de tareas. Si no se encuentran tareas, se devuelve un código 204 sin contenido."
+      responses:
+        '200':
+          description: "Lista de tareas encontrada."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Tarea"
+        '204':
+          description: "No se encontraron tareas."
+          content: {}
+        '400':
+          description: "Error 400 – Solicitud incorrecta: La petición contiene parámetros erróneos."
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Error 400: La solicitud contiene parámetros incorrectos."
+        '404':
+          description: "Error 404 – Recurso no encontrado: La URL o recurso solicitado no existe."
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Error 404: La URL especificada no se encontró."
+        '422':
+          description: "Error 422 – Entidad no procesable: Los parámetros de entrada no cumplen con el formato requerido."
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Error 422: Los parámetros proporcionados no cumplen con el formato requerido."
+        '500':
+          description: "Error 500 – Error interno del servidor."
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Error 500: Ocurrió un error inesperado en el servidor."
+
+    post:
+      summary: "Crear una nueva tarea"
+      description: >
+        "Crea una tarea nueva. Las validaciones incluyen:
+        - **Título:** Longitud entre 1 y 20 caracteres.
+        - **Descripción:** No puede estar vacía.
+        - **Fecha:** Debe ser proporcionada.
+        - **Hecho:** Debe ser un valor booleano."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TareaInput"
+      responses:
+        '201':
+          description: "Tarea creada exitosamente."
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Tarea creada correctamente."
+        '400':
+          description: "Error 400 – Error de validación: Datos inválidos."
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Error 400: Datos incorrectos para la creación de la tarea."
+        '404':
+          description: "Error 404 – Recurso no encontrado."
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Error 404: La URL de la API no se encontró."
+        '422':
+          description: "Error 422 – Entidad no procesable."
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Error 422: Formato de datos incorrecto."
+        '500':
+          description: "Error 500 – Error interno del servidor."
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Error 500: Fallo interno en el servidor."
+
+  /tareas/{id}:
+    get:
+      summary: "Obtener tarea por ID"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: "Tarea encontrada."
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Tarea encontrada correctamente."
+        '400':
+          description: "Error 400 – ID inválido."
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Error 400: ID no válido."
+        '404':
+          description: "Error 404 – Tarea no encontrada."
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Error 404: No se encontró la tarea con el ID proporcionado."
+        '422':
+          description: "Error 422 – Formato de ID incorrecto."
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Error 422: El formato del ID es incorrecto."
+        '500':
+          description: "Error 500 – Error interno del servidor."
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Error 500: Fallo en la recuperación de la tarea."
+
+components:
+  schemas:
+    Tarea:
+      type: object
+      properties:
+        id:
+          type: integer
+        titulo:
+          type: string
+        descripcion:
+          type: string
+        fecha:
+          type: string
+          format: date
+        hecho:
+          type: boolean
+
+    TareaInput:
+      type: object
+      properties:
+        titulo:
+          type: string
+        descripcion:
+          type: string
+        fecha:
+          type: string
+          format: date
+        hecho:
+          type: boolean
